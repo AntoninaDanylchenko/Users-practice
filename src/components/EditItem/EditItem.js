@@ -1,25 +1,16 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { addUser } from 'redux/users/usersOperations';
+import { changeUser } from 'redux/users/usersOperations';
 
-const AddPage = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+const EditItem = ({ user, handleForm }) => {
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
   const dispatch = useDispatch();
-
-  const navigate = useNavigate();
-
   const handleSubmit = e => {
-    const newUser = { name, email };
     e.preventDefault();
-    dispatch(addUser(newUser));
-    navigate('/users', { replace: true });
-    reset();
-  };
-  const reset = () => {
-    setEmail('');
-    setName('');
+    const newUser = { ...user, name, email };
+    dispatch(changeUser(newUser));
+    handleForm();
   };
 
   return (
@@ -43,9 +34,9 @@ const AddPage = () => {
         />
       </label>
 
-      <button type="submit">Add</button>
+      <button type="submit">Update</button>
     </form>
   );
 };
 
-export default AddPage;
+export default EditItem;

@@ -1,7 +1,6 @@
 import Button from 'components/Button/Button';
 import UserList from 'components/UserList/UserList';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { fetchUsers } from 'redux/users/usersOperations';
 import { selectUsers } from 'redux/users/usersSelectors';
 
@@ -19,7 +18,6 @@ const UsersPage = () => {
       ) : (
         <>
           <UserList />
-          <Link to="/add"> Add Users</Link>
         </>
       )}
     </>

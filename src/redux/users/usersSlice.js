@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deleteUsers, fetchUsers } from './usersOperations';
+import { addUser, deleteUsers, fetchUsers } from './usersOperations';
 
 const initialUsersState = {
   users: [],
@@ -38,7 +38,14 @@ const usersSlice = createSlice({
         // state.users.splice(indexUser, 1);
         state.users = state.users.filter(user => user.id !== action.payload);
       })
-      .addCase(deleteUsers.rejected, rejectedFetch);
+      .addCase(deleteUsers.rejected, rejectedFetch)
+      .addCase(addUser.pending, pendingFetch)
+      .addCase(addUser.fulfilled, (state, action) => {
+        state.users.push(action.payload);
+        state.isError = false;
+        state.isLoading = false;
+      })
+      .addCase(addUser.rejected, rejectedFetch);
   },
 });
 
